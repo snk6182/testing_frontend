@@ -27,7 +27,17 @@ jobs:
       # Build frontend
       - name: Build frontend
         run: npm run build
-
+      - name: Prepare frontend directory
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          script: |
+           sudo mkdir -p /var/www/testing_frontend
+           sudo chown -R $USER:$USER /var/www/testing_frontend
+           sudo chmod -R 755 /var/www/testing_frontend
       # Deploy frontend
       - name: Deploy frontend
         uses: appleboy/scp-action@v1.0.0
