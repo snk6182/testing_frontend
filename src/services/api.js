@@ -1,0 +1,13 @@
+import axios from 'axios';
+const api=axios.create({baseURL:import.meta.env.VITE_API_URL||'http://localhost:8080/api'});
+export const products=()=>api.get('/products');
+export const product=id=>api.get('/products/'+id);
+export const search=q=>api.get('/products',{params:{q}});
+export const categories=()=>api.get('/categories');
+export const login=data=>api.post('/auth/login',data);
+export const register=data=>api.post('/auth/register',data);
+export const cart=userId=>api.get('/cart/'+userId);
+export const addCart=data=>api.post('/cart',data);
+export const createOrder=data=>api.post('/orders',data);
+export const orders=userId=>api.get('/orders/user/'+userId);
+export default api;
